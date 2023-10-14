@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.Hashtable;
 import java.io.*;
 
 public class GetInventoryRequestHandler extends Thread {
@@ -31,28 +32,52 @@ public class GetInventoryRequestHandler extends Thread {
 				String [] newMsg = msg.split(" ");
 				
 				if (msg.startsWith("STOCK_REQUEST")) {
-					response = inventory.toString();
-					System.out.println(response);
+
+					//response = inventory.toString();
+
+					Hashtable<String, Integer> items = inventory.readInventory();
+
+					for (String key : items.keySet()) {
+					//System.out.println("Item: " + key + ", Quantidade: " + items.get(key));
+					out.println("Item: " + key + ", Quantidade: " + items.get(key));
+					}
+
+					//System.out.println(inventory.readInventory());
+
 				} else if (msg.startsWith("STOCK_UPDATE")) {
+
 					String key = newMsg[1];
+
 					int newValue = 0;
+
 					newValue = Integer.parseInt(newMsg[2]);
+
 					inventory.changeQuantity(key, newValue);
+
 					response = "STOCK_UPDATED";
-					System.out.println(inventory.toString());
+
+					System.out.println(inventory.readInventory());
+
 				} else {
+
 					response = "STOCK_ERROR: invalid Command";
+
 				}
+
 				System.out.println("Response=" + response);
+
 				out.println(response);
 				
 			out.flush();
 			in.close();
 			out.close();
 			ligacao.close();
+
 		} catch (IOException e) {
+
 			System.out.println("Erro na execucao do servidor: " + e);
 			System.exit(1);
+			
 		}
 	}
 }

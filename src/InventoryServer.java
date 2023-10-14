@@ -24,7 +24,7 @@ public class InventoryServer {
 				
 				Socket ligacao = servidor.accept();
 				
-// Start a GetPresencesRequestHandler thread				
+// Start a GetInventoryRequestHandler thread				
 				
 				GetInventoryRequestHandler handler = new GetInventoryRequestHandler(ligacao, inventory);
 				handler.start();
