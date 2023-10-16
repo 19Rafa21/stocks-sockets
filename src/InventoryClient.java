@@ -23,7 +23,7 @@ public class InventoryClient {
 	public static void main(String[] args) {
 		String servidor=DEFAULT_HOST;
 		int port=DEFAULT_PORT;
-		String menu = " - Change Inventory - \n1 - Maça\n2 - Banana\n3 - Pera\n0 - Exit\nChoose an option: ";
+		String menu = " - Change Inventory - \n1 - Pera\n2 - Banana\n3 - Maça\n0 - Exit\nChoose an option: ";
 		int option = -1;
 		int quantity = -1;
 		Scanner sc = new Scanner(System.in);
@@ -70,25 +70,26 @@ public class InventoryClient {
 					if(sc.hasNextInt())
 					option = sc.nextInt();
 					sc.nextLine();
-					System.out.println("Quantity: ");
-					quantity = sc.nextInt();
-					sc.nextLine();
+					if(option == 1 || option == 2 || option == 3){
+						System.out.println("Quantity: ");
+						quantity = sc.nextInt();
+						sc.nextLine();
+					}
 				} while(option > 3 || option < 0);
 
 				switch(option){
 					case 1:
-						request = "STOCK_UPDATE" + " " + "Maca" + " " + quantity;
+						request = "STOCK_UPDATE" + " " + "Pera" + " " + quantity;
 						break;
 					case 2:
 						request = "STOCK_UPDATE" + " " + "Banana" + " " + quantity;
 						break;
 					case 3:
-						request = "STOCK_UPDATE" + " " + "Pera" + " " + quantity;
+						request = "STOCK_UPDATE" + " " + "Maca" + " " + quantity;
 						break;
 					case 0:
 						threadRequest.t.interrupt();
 						sc.close();
-						client.close();
 						System.out.println("Terminou a ligacao!");
 						break;
 					default:
@@ -103,13 +104,13 @@ public class InventoryClient {
 				String msg = in.readLine();
 				System.out.println(msg);
 
-				if(msg.toString().startsWith("STOCK_UPDATED")) {
+				/*if(msg.toString().startsWith("STOCK_UPDATED")) {
 					try {
 						threadRequest.restart();
 					} catch (InterruptedException e) {
 						System.out.println("Erro na execucao do servidor: " + e);
 					}
-				}
+				}*/
 
 				//if(msg.toString().equals("STOCK_UPDATED")) threadRequest(out, in);
 
@@ -121,6 +122,5 @@ public class InventoryClient {
 			System.out.println("Erro ao comunicar com o servidor: "+ e);
 			System.exit(1);
 		}
-	
 	}
 }

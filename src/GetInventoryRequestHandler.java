@@ -38,8 +38,8 @@ public class GetInventoryRequestHandler extends Thread {
 					Hashtable<String, Integer> items = inventory.readInventory();
 
 					for (String key : items.keySet()) {
-					//System.out.println("Item: " + key + ", Quantidade: " + items.get(key));
-					out.println("Item: " + key + ", Quantidade: " + items.get(key));
+						//System.out.println("Item: " + key + ", Quantidade: " + items.get(key));
+						out.println("Item: " + key + ", Quantidade: " + items.get(key));
 					}
 
 					//System.out.println(inventory.readInventory());
